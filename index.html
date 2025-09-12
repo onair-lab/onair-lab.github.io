@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONAIR Lab - Otology Neurology Artificial Intelligence Research</title>
+    <meta name="description" content="ONAIR Lab at Wonju Severance Christian Hospital conducts cutting-edge research in medical AI, focusing on otolaryngology and neurology.">
+    <meta name="keywords" content="ONAIR, medical AI, otolaryngology, neurology, artificial intelligence, machine learning, digital health">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            margin-right: 15px;
+            background: linear-gradient(135deg, #00f5ff 0%, #0070f3 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0, 245, 255, 0.3);
+        }
+
+        .nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: linear-gradient(90deg, #00f5ff, #0070f3);
+            transition: all 0.3s;
+        }
+
+        .nav a:hover::after {
+            width: 80%;
+            left: 10%;
+        }
+
+        .nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            text-align: center;
+            padding: 8rem 0 5rem;
+            margin-top: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"><animate attributeName="opacity" values="0.1;0.3;0.1" dur="2s" repeatCount="indefinite"/></circle><circle cx="80" cy="40" r="1.5" fill="white" opacity="0.1"><animate attributeName="opacity" values="0.1;0.4;0.1" dur="3s" repeatCount="indefinite"/></circle><circle cx="40" cy="70" r="1" fill="white" opacity="0.1"><animate attributeName="opacity" values="0.1;0.5;0.1" dur="4s" repeatCount="indefinite"/></circle></svg>') repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f5ff 0%, #ffffff 50%, #0070f3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .cta-button.primary {
+            background: linear-gradient(135deg, #00f5ff 0%, #0070f3 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 245, 255, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .cta-button.primary:hover {
+            box-shadow: 0 8px 25px rgba(0, 245, 255, 0.6);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #1e293b;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #00f5ff, #0070f3);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* Research Areas */
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .research-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00f5ff, #0070f3);
+        }
+
+        .research-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(0, 245, 255, 0.3);
+        }
+
+        .research-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #00f5ff 0%, #0070f3 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 245, 255, 0.3);
+        }
+
+        .research-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .research-card p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00f5ff 0%, #0070f3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 245, 255, 0.3);
+        }
+
+        .team-card h4 {
+            font-size: 1.2rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .team-card .role {
+            color: #0070f3;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .team-contact {
+            font-size: 0.8rem;
+            color: #0070f3;
+            margin-top: 0.5rem;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Publications Section */
+        .publication-item {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            border-left: 4px solid #00f5ff;
+            transition: all 0.3s ease;
+        }
+
+        .publication-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .publication-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .publication-authors {
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-venue {
+            color: #0070f3;
+            font-weight: 500;
+        }
+
+        .year-section {
+            margin-bottom: 2rem;
+        }
+
+        .year-title {
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* News Section */
+        .recruitment-box {
+            background: linear-gradient(135deg, rgba(0,245,255,0.1), rgba(0,112,243,0.1));
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid rgba(0,245,255,0.2);
+        }
+
+        .recruitment-title {
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .recruitment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .recruitment-section h4 {
+            color: #0070f3;
+            margin-bottom: 1rem;
+        }
+
+        .recruitment-section ul {
+            color: #64748b;
+            line-height: 1.6;
+            margin-left: 1rem;
+        }
+
+        .recruitment-highlight {
+            text-align: center;
+            background: rgba(255,255,255,0.7);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .news-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid #667eea;
+        }
+
+        .news-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00f5ff 0%, #0070f3 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 15px;
+            }
+
+            .nav ul {
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 6rem 0 4rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .research-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                margin: 0 10px;
+                border-radius: 20px;
+            }
+
+            .recruitment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .research-card,
+        .team-card,
+        .publication-item {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .research-card:nth-child(2) { animation-delay: 0.1s; }
+        .research-card:nth-child(3) { animation-delay: 0.2s; }
+        .research-card:nth-child(4) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="35" height="35" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Brain left hemisphere -->
+                        <path d="M20 30C15 30 10 35 10 45C10 55 15 65 25 70C30 72 35 70 40 65C45 60 45 50 40 45C35 40 30 35 25 30C23 28 21.5 29 20 30Z" fill="white"/>
+                        <!-- Brain right hemisphere with circuit connections -->
+                        <path d="M60 30C65 30 70 35 70 45C70 55 65 65 55 70C50 72 45 70 40 65C45 60 45 50 50 45C55 40 60 35 65 30C67 28 68.5 29 70 30Z" fill="white"/>
+                        <!-- Circuit nodes -->
+                        <circle cx="75" cy="25" r="3" fill="white"/>
+                        <circle cx="75" cy="45" r="3" fill="white"/>
+                        <circle cx="75" cy="65" r="3" fill="white"/>
+                        <!-- Circuit lines -->
+                        <line x1="72" y1="25" x2="65" y2="30" stroke="white" stroke-width="2"/>
+                        <line x1="72" y1="45" x2="65" y2="45" stroke="white" stroke-width="2"/>
+                        <line x1="72" y1="65" x2="65" y2="60" stroke="white" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div>
+                    <div>ONAIR Lab</div>
+                    <div style="font-size: 0.7rem; opacity: 0.8; font-weight: 400;">Otology Neurology Artificial Intelligence Research</div>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#recruitment">Join Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>ONAIR Lab</h1>
+            <p class="subtitle">Otology Neurology Artificial Intelligence Research</p>
+            <p class="description">
+                Pioneering the future of medical AI through innovative research that bridges 
+                otolaryngology, neurology, and artificial intelligence for better patient care 
+                and clinical decision-making.
+            </p>
+            <div class="cta-buttons">
+                <a href="#research" class="cta-button primary">Explore Research</a>
+                <a href="#publications" class="cta-button secondary">View Publications</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <section class="section" id="research">
+            <h2 class="section-title">Research Areas</h2>
+            <div class="research-grid">
+                <div class="research-card">
+                    <div class="research-icon">🤖</div>
+                    <h3>LLM AI Agent Development</h3>
+                    <p>Developing and fine-tuning Large Language Model AI agents based on EMR/OCS/CDM data to support clinical decision-making and enhance diagnostic accuracy in medical practice.</p>
+                </div>
+                <div class="research-card">
+                    <div class="research-icon">📊</div>
+                    <h3>Machine Learning Prediction Models</h3>
+                    <p>Creating machine learning-based diagnostic and prognostic prediction models for otolaryngology and neurological disorders, focusing on early detection and treatment outcome prediction.</p>
+                </div>
+                <div class="research-card">
+                    <div class="research-icon">💊</div>
+                    <h3>AI Drug Repurposing</h3>
+                    <p>Utilizing cutting-edge AI technologies for drug repurposing research to discover new therapeutic applications for existing medications and develop personalized treatment approaches.</p>
+                </div>
+                <div class="research-card">
+                    <div class="research-icon">👂</div>
+                    <h3>Otology & Hearing Science</h3>
+                    <p>Advancing otolaryngology through AI-powered diagnostic and therapeutic approaches, with focus on hearing assessment data analysis and predictive modeling for auditory disorders.</p>
+                </div>
+                <div class="research-card">
+                    <div class="research-icon">🧠</div>
+                    <h3>Neurological AI</h3>
+                    <p>Developing AI models for early diagnosis and treatment of neurological diseases through brain imaging analysis, neural signal processing, and understanding of neurological conditions.</p>
+                </div>
+                <div class="research-card">
+                    <div class="research-icon">📱</div>
+                    <h3>Digital Healthcare</h3>
+                    <p>Creating digital healthcare solutions through medical big data analysis, predictive modeling using patient data, and optimization of healthcare systems for improved patient outcomes.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="team">
+            <h2 class="section-title">Our Team</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">👨‍⚕️</div>
+                    <h4>Prof. Tae-Hoon Kong</h4>
+                    <div class="role">Assistant Professor, Otolaryngology (Principal Investigator)</div>
+                    <p>Leading expert in otolaryngology-AI integration research, specializing in audiology and vestibular disorders with innovative approaches to medical AI applications.</p>
+                    <div class="team-contact">📧 cochlear84@yonsei.ac.kr</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👨‍⚕️</div>
+                    <h4>Prof. Sang-Won Hwang</h4>
+                    <div class="role">Assistant Professor, Precision Medicine</div>
+                    <p>Expert in precision medicine and AI technology integration, developing personalized treatment methods and advancing individualized healthcare solutions.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👩‍🔬</div>
+                    <h4>Prof. Hee-Jin Kim</h4>
+                    <div class="role">Research Professor</div>
+                    <p>Specialist in medical AI and data science, leading various research projects and driving innovation in healthcare technology applications.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👩‍⚕️</div>
+                    <h4>Yun-Mi Son</h4>
+                    <div class="role">Clinical Research Coordinator (CRC)</div>
+                    <p>Managing clinical research applications and patient data, ensuring seamless integration of research findings into clinical practice.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👨‍🎓</div>
+                    <h4>Cheol-Young Yoon</h4>
+                    <div class="role">PhD Student</div>
+                    <p>Leading large-scale data analysis research in vestibular disorders and hearing loss, focusing on population-based epidemiological studies.</p>
+                    <div class="team-contact">📱 010-6495-4798</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👨‍🎓</div>
+                    <h4>Jae-Ha Kim</h4>
+                    <div class="role">MS Student (3rd Semester)</div>
+                    <p>Conducting machine learning research for medical data analysis with focus on clinical applications and predictive modeling.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h4>Dong-Hyeon Kim</h4>
+                    <div class="role">MS Student (3rd Semester)</div>
+                    <p>Developing deep learning models and medical image analysis, actively engaged in cutting-edge AI research for healthcare applications.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👨‍🎓</div>
+                    <h4>Dong-Yeon Lee</h4>
+                    <div class="role">MS Student</div>
+                    <p>Contributing innovative ideas to neuroscience-AI integration research, bringing fresh perspectives to interdisciplinary projects.</p>
+                    <div class="team-contact">📱 010-3589-0530</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👩‍🎓</div>
+                    <h4>Min-Kyung Kim</h4>
+                    <div class="role">Undergraduate Research Assistant</div>
+                    <p>Passionate about medical AI field, actively participating in various laboratory projects and contributing to research initiatives.</p>
+                    <div class="team-contact">📱 010-5395-2217</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="publications">
+            <h2 class="section-title">Publications (Total: 46 papers)</h2>
+            
+            <!-- 2025 Publications -->
+            <div class="year-section">
+                <h3 class="year-title">📊 2025 (3 papers)</h3>
+                <div class="publication-item">
+                    <div class="publication-title">Nationwide trends in steroid therapy for vestibular neuritis: insights from South Korea's health insurance review and assessment data</div>
+                    <div class="publication-authors">Yoon CY, Kong
