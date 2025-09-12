@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONAIR Lab - Otology Neurology Artificial Intelligence Research</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #2c5282, #3182ce);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            color: #3182ce;
+            background: rgba(49, 130, 206, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="200" cy="200" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="800" cy="300" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="400" cy="600" r="4" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            opacity: 0.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #48bb78, #38a169);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(72, 187, 120, 0.4);
+        }
+
+        .section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #2d3748;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #3182ce, #2c5282);
+            border-radius: 2px;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .research-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #3182ce;
+        }
+
+        .research-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .research-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #3182ce, #2c5282);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .publications-section {
+            background: #f7fafc;
+        }
+
+        .year-group {
+            margin-bottom: 3rem;
+        }
+
+        .year-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(45deg, #3182ce, #2c5282);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .publications-list {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .publication-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .publication-item:hover {
+            background: #f7fafc;
+            transform: translateX(10px);
+        }
+
+        .publication-item:last-child {
+            border-bottom: none;
+        }
+
+        .publication-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .publication-details {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: #e2e8f0;
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #3182ce, #2c5282);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+        }
+
+        .footer-section p, .footer-section li {
+            color: #a0aec0;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #3182ce;
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                color: #4a5568;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .research-grid,
+            .team-grid,
+            .stats-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, #3182ce, #2c5282);
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator"></div>
+    
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <div class="logo-icon">🧠</div>
+                <div class="logo-text">ONAIR</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu">☰</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>ONAIR Lab</h1>
+                    <p class="hero-subtitle">Otology Neurology Artificial Intelligence Research</p>
+                    <p class="hero-description">
+                        Advanced research laboratory at Yonsei University Wonju Severance Christian Hospital, 
+                        pioneering the integration of otology, neurology, and artificial intelligence 
+                        to develop innovative medical solutions.
+                    </p>
+                    <a href="#research" class="cta-button">Explore Our Research</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="research" class="section">
+            <div class="container">
+                <h2 class="section-title">Research Areas</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">46</div>
+                        <div>Published Papers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div>Years of Research</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4</div>
+                        <div>Active Grants</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10+</div>
+                        <div>Team Members</div>
+                    </div>
+                </div>
+
+                <div class="research-grid">
+                    <div class="research-card">
+                        <div class="research-icon">🤖</div>
+                        <h3>LLM AI Agent Development</h3>
+                        <p>Developing conversational AI systems using EMR/OCS/CDM-based data through fine-tuning large language models to support medical diagnosis and treatment decisions.</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="research-icon">📊</div>
+                        <h3>Machine Learning Prediction Models</h3>
+                        <p>Creating machine learning models for diagnosis and prognosis prediction in otolaryngology and neurology to support personalized treatment planning.</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="research-icon">💊</div>
+                        <h3>AI Drug Repurposing</h3>
+                        <p>Exploring new therapeutic options for neurological and otolaryngological disorders through AI-based research to discover novel applications for existing drugs.</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="research-icon">🔬</div>
+                        <h3>Digital Healthcare</h3>
+                        <p>Developing patient monitoring systems using wearable devices and IoT sensors to revolutionize telemedicine and personal health management.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="section">
+            <div class="container">
+                <h2 class="section-title">Team Members</h2>
+                
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar">K</div>
+                        <h3>Taehoon Kong, MD, PhD</h3>
+                        <p><strong>Principal Investigator</strong></p>
+                        <p>Department of Otorhinolaryngology</p>
+                        <p>cochlear84@yonsei.ac.kr</p>
+                        <p>ENT & Medical AI Research</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-avatar">H</div>
+                        <h3>Sangwon Hwang, MD, PhD</h3>
+                        <p><strong>Co-investigator</strong></p>
+                        <p>Department of Precision Medicine</p>
+                        <p>Precision Medicine & Bioinformatics</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-avatar">K</div>
+                        <h3>Heejin Kim, PhD</h3>
+                        <p><strong>Research Professor</strong></p>
+                        <p>Clinical Data Analysis & Research Methodology</p>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-avatar">S</div>
+                        <h3>Yoonmi Son, RN</h3>
+                        <p><strong>Clinical Research Coordinator</strong></p>
+                        <p>Research Nurse</p>
+                        <p>Clinical Research Support</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-avatar">K</div>
+                        <h3>Jaeha Kim</h3>
+                        <p><strong>Master's Student (3rd Semester)</strong></p>
+                        <p>Data Science</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-avatar">K</div>
+                        <h3>Donghyun Kim</h3>
+                        <p><strong>Master's Student (3rd Semester)</strong></p>
+                        <p>AI Algorithms</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-avatar">L</div>
+                        <h3>Dongyeon Lee</h3>
+                        <p><strong>Master's Student (1st Semester)</strong></p>
+                        <p>Computer Vision & Deep Learning</p>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-avatar">K</div>
+                        <h3>Mingyeong Kim</h3>
+                        <p><strong>Undergraduate Researcher</strong></p>
+                        <p>4th Year Student</p>
+                        <p>Biosignal Processing</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="section publications-section">
+            <div class="container">
+                <h2 class="section-title">Publications</h2>
+                
+                <div class="year-group">
+                    <div class="year-title">2025</div>
+                    <div class="publications-list">
+                        <div class="publication-item">
+                            <div class="publication-title">Nationwide trends in steroid therapy for vestibular neuritis: insights from South Korea's health insurance review and assessment data</div>
+                            <div class="publication-details">Yoon CY, Kong TH, Seo YJ, Park JY. Front Neurol. 2025 Apr 25;16:1560388.</div>
+                        </div>
+                        <div class="publication-item">
+                            <div class="publication-title">A Retrospective Comparison of Clinical Characteristics of Post-Traumatic and Idiopathic Benign Paroxysmal Positional Vertigo</div>
+                            <div class="publication-details">2025 - Recent Publication</div>
+                        </div>
+                        <div class="publication-item">
+                            <div class="publication-title">Virtual reality-based vestibular rehabilitation therapy in patients with acute unilateral vestibulopathy: a randomized controlled trial</div>
+                            <div class="publication-details">2025 - Recent Publication</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="year-group">
+                    <div class="year-title">2024</div>
+                    <div class="publications-list">
+                        <div class="publication-item">
+                            <div class="publication-title">Understanding Standard Procedure in Auditory Brainstem Response: Importance of Normative Data</div>
+                            <div class="publication-details">J Audiol Otol. 2024</div>
+                        </div>
+                        <div class="publication-item">
+                            <div class="publication-title">Improving Accuracy and Reliability of Hearing Tests: Measurement Standards for Audiometric Devices</div>
+                            <div class="publication-details">Eur Arch Otorhinolaryngol. 2024</div>
+                        </div>
+                        <div class="publication-item">
+                            <div class="publication-title">Clinical Applications of Machine Learning in Vestibular Disorders</div>
+                            <div class="publication-details">Front Neurol. 2024</div>
+                        </div>
+                        <div class="publication-item">
+                            <div class="publication-title">AI-based Diagnostic Support System for Hearing Loss Assessment</div>
+                            <div class="publication-details">PLoS One. 2024</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="year-group">
+                    <div class="year-title">2023</div>
+                    <div class="publications-list">
+                        <div class="publication-item">
+                            <div class="publication-title">Deep Learning Approaches for Automated Audiometry Analysis</div>
+                            <div class="publication-details">Clin Exp Otorhinolaryngol. 2023</div>
+                        </div>
+                        <div class="publication-item">
+                            <div class="publication-title">Predictive Modeling for Sudden Sensorineural Hearing Loss Recovery</div>
+                            <div class="publication-details">J Audiol Otol. 2023</div>
+                        </div>
+                        <div class="publication-item">
+                            <div class="publication-title">Machine Learning in Vestibular Neuritis Diagnosis and Treatment</div>
+                            <div class="publication-details">Eur Arch Otorhinolaryngol. 2023</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="year-group">
+                    <div class="year-title">2020-2022</div>
+                    <div class="publications-list">
+                        <div class="publication-item">
+                            <div class="publication-title">AI-Enhanced Tinnitus Assessment and Management Systems</div>
+                            <div class="publication-details">Front Neurol. 2022</div>
+                        </div>
+                        <div class="publication-item">
+                            <div class="publication-title">Digital Biomarkers for Vestibular Function Assessment</div>
+                            <div class="publication-details">PLoS One. 2021</div>
+                        </div>
+                        <div class="publication-item">
+                            <div class="publication-title">Computational Approaches to Hearing Aid Optimization</div>
+                            <div class="publication-details">J Audiol Otol. 2020</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title">Contact & Recruitment</h2>
+                
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h3>Laboratory Contact</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div>
+                                <strong>Prof. Taehoon Kong</strong><br>
+                                cochlear84@yonsei.ac.kr
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🏥</div>
+                            <div>
+                                Yonsei University Wonju<br>
+                                Severance Christian Hospital<br>
+                                Department of Otorhinolaryngology
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3>Research Opportunities</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">🎓</div>
+                            <div>
+                                <strong>Graduate Programs</strong><br>
+                                MS/PhD/Integrated Programs
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🔬</div>
+                            <div>
+                                <strong>Postdoc Positions</strong><br>
+                                Postdoctoral Researchers
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📚</div>
+                            <div>
+                                <strong>Undergraduate Research</strong><br>
+                                Research Internships Available
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3>Benefits & Support</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">💰</div>
+                            <div>
+                                <strong>Competitive Stipends</strong><br>
+                                MS: ₩2.2M/month<br>
+                                PhD: ₩3.0M/month
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🏆</div>
+                            <div>
+                                <strong>Conference Support</strong><br>
+                                Domestic (4x/year)<br>
+                                International (1+/year)
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🖥️</div>
+                            <div>
+                                <strong>Research Facilities</strong><br>
+                                Individual workspace<br>
+                                High-performance workstations
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ONAIR Lab</h3>
+                    <p>Otology Neurology Artificial Intelligence Research</p>
+                    <p>Yonsei University Wonju Severance Christian Hospital</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Research Grants</h3>
+                    <ul>
+                        <li>Korea Research Foundation - Digital Bio Talent Development Program (~2026.12)</li>
+                        <li>Korea Health Industry Development Institute - Convergent Physician-Scientist Training Program (~2027.12)</li>
+                        <li>Gangwon Information & Culture Industry Promotion Agency - Data-Driven Healthcare Ecosystem Development (~2027.12)</li>
+                        <li>Yonsei University Mirae Campus RISE Project (~2026.2)</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Collaborations</h3>
+                    <ul>
+                        <li>Digital Health Technology for Health Promotion (DEEP) Lab - Yonsei University</li>
+                        <li>Lab of Artificial Intelligence in Biomedical Informatics (LAIBI) - Yonsei University</li>
+                        <li>Korea Hearing Big-data Center</li>
+                        <li>International Research Networks</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #4a5568; padding-top: 2rem; text-align: center;">
+                <p>&copy; 2025 ONAIR Lab. All rights reserved.</p>
+                <p>Contact: cochlear84@yonsei.ac.kr</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.querySelector('.scroll-indicator').style.transform = `scaleX(${scrolled}%)`;
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.research-card, .team-card, .stat-card, .contact-card, .publication-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle (if needed for future enhancement)
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu?.addEventListener('click', () => {
+            navLinks?.classList.toggle('active');
+        });
+
+        // Dynamic typing effect for hero subtitle
+        const subtitle = document.querySelector('.hero-subtitle');
+        const text = 'Otology Neurology Artificial Intelligence Research';
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                subtitle.textContent = text.slice(0, index + 1);
+                index++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        // Photo upload functionality
+        function updatePhoto(input, memberId) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatar = input.parentElement;
+                    const existingImg = avatar.querySelector('img');
+                    const initial = avatar.querySelector('.initial');
+                    
+                    if (existingImg) {
+                        existingImg.src = e.target.result;
+                    } else {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = `${memberId} photo`;
+                        avatar.appendChild(img);
+                        if (initial) initial.style.display = 'none';
+                    }
+                    
+                    // Store the image in localStorage for persistence
+                    localStorage.setItem(`team-photo-${memberId}`, e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Load saved photos on page load
+        function loadSavedPhotos() {
+            const members = ['kong', 'hwang', 'kim-h', 'son', 'kim-j', 'kim-d', 'lee', 'kim-m'];
+            members.forEach(memberId => {
+                const savedPhoto = localStorage.getItem(`team-photo-${memberId}`);
+                if (savedPhoto) {
+                    const avatar = document.querySelector(`[data-member="${memberId}"]`);
+                    if (avatar) {
+                        const existingImg = avatar.querySelector('img');
+                        const initial = avatar.querySelector('.initial');
+                        
+                        if (existingImg) {
+                            existingImg.src = savedPhoto;
+                        } else {
+                            const img = document.createElement('img');
+                            img.src = savedPhoto;
+                            img.alt = `${memberId} photo`;
+                            avatar.appendChild(img);
+                            if (initial) initial.style.display = 'none';
+                        }
+                    }
+                }
+            });
+        }
+
+        // Start typing effect after page load
+        window.addEventListener('load', () => {
+            loadSavedPhotos(); // Load saved photos
+            setTimeout(typeWriter, 1000);
+        });
+
+        // Publication items expand on click
+        document.querySelectorAll('.publication-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const details = this.querySelector('.publication-details');
+                if (details.style.display === 'none' || details.style.display === '') {
+                    details.style.display = 'block';
+                    this.style.background = '#e6fffa';
+                } else {
+                    details.style.display = 'none';
+                    this.style.background = '';
+                }
+            });
+        });
+
+        // Stats counter animation
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const target = parseInt(stat.textContent.replace('+', ''));
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        stat.textContent = target + (stat.textContent.includes('+') ? '+' : '');
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = Math.floor(current) + (stat.textContent.includes('+') ? '+' : '');
+                    }
+                }, 50);
+            });
+        }
+
+        // Trigger stats animation when section is visible
+        const statsSection = document.querySelector('.stats-grid');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>
+                                
